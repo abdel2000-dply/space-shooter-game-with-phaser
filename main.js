@@ -8,6 +8,7 @@ const sizes = {
 
 const speed = 240;
 const bulletSpeed = 400;
+const enemySpeed = 200;
 const fireRate = 100;
 
 class GameScene extends Phaser.Scene {
@@ -17,13 +18,16 @@ class GameScene extends Phaser.Scene {
     this.cursor
     this.playerSpeed = speed
     this.bullets;
+    this.enemies;
     this.lastFired = 0;
+    this.score = 0;
   }
 
   preload() {
     this.load.image('platform', '/assets/images/platform.png')
     this.load.image('player', '/assets/images/player.png')
     this.load.image('bullet', '/assets/images/bullet.png')
+    this.load.image('enemy', '/assets/images/enemy.png')
   }
 
   create() {
@@ -39,10 +43,30 @@ class GameScene extends Phaser.Scene {
       defaultKey: 'bullet',
       maxSize: 15,
       runChildUpdate: true,
-      allowGravity: false
+      allowGravity: false,
     });
 
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+  
+    this.enemies = this.physics.add.group({
+      defaultKey: 'enemy',
+      maxSize: 15,
+      runChildUpdate: true,
+      allowGravity: false,
+    });
+
+    this.time.addEvent({
+      delay: 800,
+      callback: this.addEnemy,
+      callbackScope: this,
+      loop: true,
+    });
+  
+    this.physics.add.collider(this.bullets, this.enemies, this.hitEnemy, null, this);
+    this.physics.add.collider(this.enemies, this.player, () => {
+      console.log("Game Over");
+      this.scene.restart();
+    });
   }
 
   update() {
@@ -74,7 +98,16 @@ class GameScene extends Phaser.Scene {
         }
       }
     }, this);
-
+  
+    this.enemies.children.each(enemy => {
+      if (enemy.active) {
+        enemy.y += enemySpeed * this.game.loop.delta / 1000;
+        if (enemy.y > sizes.height) {
+          enemy.setActive(false);
+          enemy.setVisible(false);
+        }
+      }
+    });
   }
 
   fireBullet() {
@@ -86,6 +119,27 @@ class GameScene extends Phaser.Scene {
       bullet.setPosition(this.player.x + this.player.width / 2 - 5, this.player.y);
     }
   }
+
+  addEnemy() {
+    const enemy = this.enemies.get();
+
+    if (enemy) {
+      enemy.setActive(true);
+      enemy.setVisible(true);
+      enemy.setPosition(Math.random() * sizes.width, 0);
+    }
+  }
+
+  hitEnemy(bullet, enemy) {
+    bullet.setActive(false);
+    bullet.setVisible(false);
+
+    enemy.setActive(false);
+    enemy.setVisible(false);
+
+    this.score += 10; // Increase score
+    console.log("Score: ", this.score); // Log the score for now (You can display it later)
+  }
 }
 
 const config = {
@@ -96,7 +150,7 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: speed },
+      gravity: { y: 0 },
       debug: false
     }
   },
