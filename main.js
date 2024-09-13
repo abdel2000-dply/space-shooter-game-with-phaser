@@ -126,7 +126,7 @@ class GameScene extends Phaser.Scene {
     if (enemy) {
       enemy.setActive(true);
       enemy.setVisible(true);
-      enemy.setPosition(Math.random() * sizes.width, 0);
+      enemy.setPosition(Math.floor(Math.random() * (sizes.width - 80)), 0);
     }
   }
 
