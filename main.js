@@ -21,6 +21,8 @@ class GameScene extends Phaser.Scene {
     this.enemies;
     this.lastFired = 0;
     this.score = 0;
+    this.scoreText;
+    this.gameOver = false;
   }
 
   preload() {
@@ -63,9 +65,11 @@ class GameScene extends Phaser.Scene {
     });
   
     this.physics.add.collider(this.bullets, this.enemies, this.hitEnemy, null, this);
-    this.physics.add.collider(this.enemies, this.player, () => {
-      console.log("Game Over");
-      this.scene.restart();
+    this.physics.add.collider(this.enemies, this.player, this.gameOverHandler, null, this);
+
+    this.scoreText = this.add.text(16, 16, 'Score: 0', {
+      fontSize: '32px',
+      fill: '#fff'
     });
   }
 
