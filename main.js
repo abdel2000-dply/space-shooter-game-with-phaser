@@ -162,9 +162,14 @@ class GameScene extends Phaser.Scene {
     const enemy = this.enemies.get();
 
     if (enemy) {
+      const xPosition = Phaser.Math.Between(
+        80 / 2,
+        sizes.width - 80 / 2
+      );
+
       enemy.setActive(true);
       enemy.setVisible(true);
-      enemy.setPosition(Math.floor(Math.random() * (sizes.width - 80)), 0);
+      enemy.setPosition(xPosition, 0);
     }
   }
 
