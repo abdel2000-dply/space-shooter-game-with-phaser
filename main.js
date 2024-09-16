@@ -6,7 +6,7 @@ const sizes = {
   height: 600
 };
 
-const speed = 240;
+const speed = 220;
 const bulletSpeed = 400;
 const enemySpeed = 200;
 const fireRate = 100;
@@ -40,6 +40,10 @@ class GameScene extends Phaser.Scene {
     this.player.setImmovable(true);
     this.player.body.allowGravity = false;
     this.player.body.collideWorldBounds = true;
+    // this.player.setDisplaySize(50, 50); // Set the display size of the player
+    this.player
+      .setSize(this.player.width * 0.8, this.player.height * 0.8)
+      .setOffset(this.player.width * 0.1, this.player.height * 0.1);
 
     this.cursor = this.input.keyboard.createCursorKeys();
 
@@ -47,7 +51,10 @@ class GameScene extends Phaser.Scene {
       defaultKey: 'bullet',
       maxSize: 15,
       runChildUpdate: true,
-      allowGravity: false
+      allowGravity: false,
+      createCallback: (bullet) => {
+        bullet.setDisplaySize(25, 25);
+      }
     });
 
     this.spacebar = this.input.keyboard.addKey(
@@ -163,10 +170,7 @@ class GameScene extends Phaser.Scene {
     const enemy = this.enemies.get();
 
     if (enemy) {
-      const xPosition = Phaser.Math.Between(
-        80 / 2,
-        sizes.width - 80 / 2
-      );
+      const xPosition = Phaser.Math.Between(80 / 2, sizes.width - 80 / 2);
 
       enemy.setActive(true);
       enemy.setVisible(true);
