@@ -91,7 +91,8 @@ class GameScene extends Phaser.Scene {
     this.gameOverText = this.add
       .text(sizes.width / 2, sizes.height / 2, '', {
         fontSize: '25px',
-        fill: '#5c89d0'
+        fill: '#5c89d0',
+        fontWeight: 'bold'
       })
       .setOrigin(0.5, 0.5)
       .setVisible(false);
@@ -193,6 +194,7 @@ class GameScene extends Phaser.Scene {
     this.player.setVisible(false);
     this.enemies.children.each((enemy) => enemy.setVisible(false));
     this.bullets.children.each((bullet) => bullet.setVisible(false));
+    this.scoreText.setVisible(false);
 
     this.cameras.main.shake(500); // Shake the camera
     this.platform.setVisible(false);
@@ -206,7 +208,7 @@ class GameScene extends Phaser.Scene {
 
     this.cameras.main.setBackgroundColor('#000'); // Set background to black
     this.gameOverText.setText(
-      `Game Over\n\nScore: ${this.score}\nHighest Score: ${Math.max(
+      `Game Over\n\n\nScore: ${this.score}\nHighest Score: ${Math.max(
         this.score,
         highestScore
       )}\n\nPress SPACE to Restart`
