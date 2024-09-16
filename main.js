@@ -65,7 +65,10 @@ class GameScene extends Phaser.Scene {
       defaultKey: 'enemy',
       maxSize: 15,
       runChildUpdate: true,
-      allowGravity: false
+      allowGravity: false,
+      createCallback: (enemy) => {
+        enemy.setDisplaySize(80, 100);
+      }
     });
 
     this.time.addEvent({
