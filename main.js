@@ -242,7 +242,7 @@ class GameScene extends Phaser.Scene {
   gameOverHandler() {
     this.gameOver = true;
     this.physics.pause();
-    this.bgMusic.stop(); // Stop background music
+    this.sound.stopAll(); // Stop all sounds
     this.sound.play('gameOverSound'); // Play game over sound
 
     this.player.setVisible(false);
