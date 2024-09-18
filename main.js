@@ -26,6 +26,7 @@ class GameScene extends Phaser.Scene {
     this.bgMusic;
     this.shootSound;
     this.hitSound;
+    this.explosionEmitter;
   }
 
   preload() {
@@ -33,6 +34,7 @@ class GameScene extends Phaser.Scene {
     this.load.image('player', '/assets/images/player.png');
     this.load.image('bullet', '/assets/images/bullet.png');
     this.load.image('enemy', '/assets/images/enemy.png');
+    this.load.image('explosion', '/assets/images/explosion.png');
 
     // Sound effects
     this.load.audio('bgMusic', '/assets/audios/backgroundSound.ogg');
@@ -122,6 +124,15 @@ class GameScene extends Phaser.Scene {
       })
       .setOrigin(0.5, 0.5)
       .setVisible(false);
+
+    this.physics.world.setBoundsCollision(true, true, true, true);
+
+    this.explosionEmitter = this.add.particles(0, 0, 'explosion', {
+      speed: 10,
+      scale: 1.5,
+      duration: 300,
+      emitting: false
+    });
   }
 
   update() {
@@ -206,8 +217,11 @@ class GameScene extends Phaser.Scene {
       enemy.setActive(false);
       enemy.setVisible(false);
 
+      this.explosionEmitter.explode(5, enemy.x, enemy.y);
+
       this.hitSound.stop();
       this.hitSound.play();
+
       this.score += 10;
       this.scoreText.setText('Score: ' + this.score);
     }
