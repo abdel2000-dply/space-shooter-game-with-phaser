@@ -23,6 +23,8 @@ class GameScene extends Phaser.Scene {
     this.score = 0;
     this.scoreText;
     this.gameOver = false;
+    this.bgMusic;
+    this.shootSound;
   }
 
   preload() {
@@ -30,9 +32,20 @@ class GameScene extends Phaser.Scene {
     this.load.image('player', '/assets/images/player.png');
     this.load.image('bullet', '/assets/images/bullet.png');
     this.load.image('enemy', '/assets/images/enemy.png');
+
+    // Sound effects
+    this.load.audio('bgMusic', '/assets/audios/backgroundSound.ogg');
+    this.load.audio('gameOverSound', '/assets/audios/Defeated.ogg');
+    this.load.audio('shootSound', '/assets/audios/alienshoot1.wav');
+
   }
 
   create() {
+    this.bgMusic = this.sound.add('bgMusic', { loop: true });
+    this.shootSound = this.sound.add('shootSound');
+    this.bgMusic.play();
+    this.bgMusic.setVolume(0.5);
+
     this.platform = this.add.image(0, 0, 'platform').setOrigin(0, 0);
     this.player = this.physics.add
       .image(0, sizes.height - 100, 'player')
@@ -163,6 +176,7 @@ class GameScene extends Phaser.Scene {
         this.player.x + this.player.width / 2 - 5,
         this.player.y
       );
+      this.shootSound.play();
     }
   }
 
@@ -197,6 +211,8 @@ class GameScene extends Phaser.Scene {
   gameOverHandler() {
     this.gameOver = true;
     this.physics.pause();
+    this.bgMusic.stop(); // Stop background music
+    this.sound.play('gameOverSound'); // Play game over sound
 
     this.player.setVisible(false);
     this.enemies.children.each((enemy) => enemy.setVisible(false));
@@ -226,6 +242,8 @@ class GameScene extends Phaser.Scene {
       this.score = 0; // Reset score for new game
       this.scene.restart(); // Restart the scene
       this.gameOver = false;
+      this.sound.stopAll(); // Stop all sounds
+      this.bgMusic.play(); // Play background music again
     });
   }
 }
