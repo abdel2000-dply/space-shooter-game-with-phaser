@@ -25,6 +25,7 @@ class GameScene extends Phaser.Scene {
     this.gameOver = false;
     this.bgMusic;
     this.shootSound;
+    this.hitSound;
   }
 
   preload() {
@@ -37,12 +38,14 @@ class GameScene extends Phaser.Scene {
     this.load.audio('bgMusic', '/assets/audios/backgroundSound.ogg');
     this.load.audio('gameOverSound', '/assets/audios/Defeated.ogg');
     this.load.audio('shootSound', '/assets/audios/alienshoot1.wav');
+    this.load.audio('hitSound', '/assets/audios/explosion1.wav');
 
   }
 
   create() {
     this.bgMusic = this.sound.add('bgMusic', { loop: true });
     this.shootSound = this.sound.add('shootSound');
+    this.hitSound = this.sound.add('hitSound');
     this.bgMusic.play();
     this.bgMusic.setVolume(0.5);
 
@@ -203,6 +206,8 @@ class GameScene extends Phaser.Scene {
       enemy.setActive(false);
       enemy.setVisible(false);
 
+      this.hitSound.stop();
+      this.hitSound.play();
       this.score += 10;
       this.scoreText.setText('Score: ' + this.score);
     }
