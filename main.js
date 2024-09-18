@@ -31,18 +31,18 @@ class GameScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('platform', '/assets/images/platform.png');
-    this.load.image('player', '/assets/images/player.png');
-    this.load.image('bullet', '/assets/images/bullet.png');
-    this.load.image('enemy', '/assets/images/enemy.png');
-    this.load.image('explosion', '/assets/images/explosion.png');
-    this.load.image('speedParticle', '/assets/images/speed.png');
+    this.load.image('platform', 'assets/images/platform.png');
+    this.load.image('player', 'assets/images/player.png');
+    this.load.image('bullet', 'assets/images/bullet.png');
+    this.load.image('enemy', 'assets/images/enemy.png');
+    this.load.image('explosion', 'assets/images/explosion.png');
+    this.load.image('speedParticle', 'assets/images/speed.png');
 
     // Sound effects
-    this.load.audio('bgMusic', '/assets/audios/backgroundSound.ogg');
-    this.load.audio('gameOverSound', '/assets/audios/Defeated.ogg');
-    this.load.audio('shootSound', '/assets/audios/alienshoot1.wav');
-    this.load.audio('hitSound', '/assets/audios/explosion1.wav');
+    this.load.audio('bgMusic', 'assets/audios/backgroundSound.ogg');
+    this.load.audio('gameOverSound', 'assets/audios/Defeated.ogg');
+    this.load.audio('shootSound', 'assets/audios/alienshoot1.wav');
+    this.load.audio('hitSound', 'assets/audios/explosion1.wav');
   }
 
   create() {
