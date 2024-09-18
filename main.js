@@ -27,6 +27,7 @@ class GameScene extends Phaser.Scene {
     this.shootSound;
     this.hitSound;
     this.explosionEmitter;
+    this.speedParticles;
   }
 
   preload() {
@@ -35,13 +36,13 @@ class GameScene extends Phaser.Scene {
     this.load.image('bullet', '/assets/images/bullet.png');
     this.load.image('enemy', '/assets/images/enemy.png');
     this.load.image('explosion', '/assets/images/explosion.png');
+    this.load.image('speedParticle', '/assets/images/speed.png');
 
     // Sound effects
     this.load.audio('bgMusic', '/assets/audios/backgroundSound.ogg');
     this.load.audio('gameOverSound', '/assets/audios/Defeated.ogg');
     this.load.audio('shootSound', '/assets/audios/alienshoot1.wav');
     this.load.audio('hitSound', '/assets/audios/explosion1.wav');
-
   }
 
   create() {
@@ -129,10 +130,19 @@ class GameScene extends Phaser.Scene {
 
     this.explosionEmitter = this.add.particles(0, 0, 'explosion', {
       speed: 10,
-      scale: 1.5,
-      duration: 300,
+      scale: {start: 1.8, end: 0},
+      alpha: {start: 1, end: 0},
+      duration: 350,
       emitting: false
     });
+
+    this.speedParticles = this.add.particles(0, 0, 'speedParticle', {
+      speed: 40,
+      scale: { start: 0.4, end: 0 },
+      alpha: { start: 0.4, end: 0 },
+      blendMode: 'ADD',
+    });
+    this.speedParticles.startFollow(this.player, this.player.width/2, this.player.height, true);
   }
 
   update() {
@@ -221,6 +231,8 @@ class GameScene extends Phaser.Scene {
 
       this.hitSound.stop();
       this.hitSound.play();
+
+      this.c
 
       this.score += 10;
       this.scoreText.setText('Score: ' + this.score);
