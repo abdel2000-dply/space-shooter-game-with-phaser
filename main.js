@@ -51,15 +51,16 @@ class GameScene extends Phaser.Scene {
   }
 
   create() {
+    this.bgMusic = this.sound.add('bgMusic', { loop: true });
+    this.shootSound = this.sound.add('shootSound');
+    this.hitSound = this.sound.add('hitSound');
+
     if (!flag) {
       this.scene.pause('scene-game');
     }
     // this.scene.pause('scene-game');
 
-    this.bgMusic = this.sound.add('bgMusic', { loop: true });
-    this.shootSound = this.sound.add('shootSound');
-    this.hitSound = this.sound.add('hitSound');
-    this.bgMusic.play();
+    // this.bgMusic.play();
     this.bgMusic.setVolume(0.5);
 
     this.platform = this.add.image(0, 0, 'platform').setOrigin(0, 0);
@@ -310,4 +311,5 @@ startbtn.addEventListener('click', () => {
   flag = true;
   gameStart.style.display = 'none';
   game.scene.resume('scene-game');
+  game.scene.getScene('scene-game').bgMusic.play();
 });
