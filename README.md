@@ -2,6 +2,12 @@
 
 Welcome to Space Shooter, a fun and fast-paced 2D game built using Phaser.js. In this game, you'll control a spaceship, fire bullets at incoming enemies, and dodge obstacles to score as high as possible!
 
+## Play Now
+
+You can play the game by clicking the link below:
+
+[Play Space Shooter](https://abdel2000-dply.github.io/space-shooter-game-with-phaser/)
+
 ## 🎮 How to Play
 
 - **Movement:** Use the arrow keys to move your spaceship in any direction.
@@ -23,5 +29,7 @@ Welcome to Space Shooter, a fun and fast-paced 2D game built using Phaser.js. In
 - **JavaScript (ES6)** for game logic.
 - **HTML5** for game rendering.
 - **CSS3** for styling the game’s UI.
+
+
 
 This is a classic space shooter game built using the Phaser framework. Players control a spaceship, dodging enemy projectiles and destroying enemy ships to earn points.
