@@ -11,6 +11,11 @@ const bulletSpeed = 400;
 const enemySpeed = 200;
 const fireRate = 100;
 
+let flag = false;
+
+const gameStart = document.getElementById('gameStart');
+const startbtn = document.getElementById('startbtn');
+
 class GameScene extends Phaser.Scene {
   constructor() {
     super('scene-game');
@@ -46,6 +51,11 @@ class GameScene extends Phaser.Scene {
   }
 
   create() {
+    if (!flag) {
+      this.scene.pause('scene-game');
+    }
+    // this.scene.pause('scene-game');
+
     this.bgMusic = this.sound.add('bgMusic', { loop: true });
     this.shootSound = this.sound.add('shootSound');
     this.hitSound = this.sound.add('hitSound');
@@ -295,3 +305,9 @@ const config = {
 };
 
 const game = new Phaser.Game(config);
+
+startbtn.addEventListener('click', () => {
+  flag = true;
+  gameStart.style.display = 'none';
+  game.scene.resume('scene-game');
+});
