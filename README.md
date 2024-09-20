@@ -30,6 +30,8 @@ You can play the game by clicking the link below:
 - **HTML5** for game rendering.
 - **CSS3** for styling the game’s UI.
 
+## 🌐 Live Demo
 
+Check out the live version of the game [here](https://youtu.be/_5CsNvUHu2M)!
 
 This is a classic space shooter game built using the Phaser framework. Players control a spaceship, dodging enemy projectiles and destroying enemy ships to earn points.
